@@ -38,22 +38,23 @@ model = joblib.load("../models/model.pkl")
 @app.route('/index')
 def index():
     
-    # extract data needed for visuals
-    # TODO: Below is an example - modify to extract data for your own visuals
+    # extract data needed for visuals - 1st visual
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
     
+    # extract data needed for visuals - 2nd visual
     category_related_direct = df[df['genre'] == 'direct'].iloc[:, 4:].sum()
     category_names_direct = df[df['genre'] == 'direct'].iloc[:, 4:].sum().index
     
+    # extract data needed for visuals - 3rd visual
     category_related_social = df[df['genre'] == 'social'].iloc[:, 4:].sum()
     category_names_social = df[df['genre'] == 'social'].iloc[:, 4:].sum().index
     
+    # extract data needed for visuals - 4th visual
     category_related_news = df[df['genre'] == 'news'].iloc[:, 4:].sum()
     category_names_news = df[df['genre'] == 'news'].iloc[:, 4:].sum().index
     
-    # create visuals
-    # TODO: Below is an example - modify to create your own visuals
+    # create 4 above visuals
     graphs = [
         {
             'data': [
@@ -158,9 +159,9 @@ def go():
     )
 
 
-#def main():
-    #app.run(host='0.0.0.0', port=3001, debug=True)
+def main():
+    app.run(host='0.0.0.0', port=3001, debug=True)
 
 
-#if __name__ == '__main__':
-    #main()
+if __name__ == '__main__':
+    main()
