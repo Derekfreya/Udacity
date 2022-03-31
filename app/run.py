@@ -26,11 +26,11 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-engine = create_engine('sqlite:///../data/YourDatabaseName.db')
-df = pd.read_sql_table('YourTableName', engine)
+engine = create_engine('sqlite:///../data/DisasterResponseDatabase.db')
+df = pd.read_sql_table('DisasterResponseRawData', engine)
 
 # load model
-model = joblib.load("../models/your_model_name.pkl")
+model = joblib.load("../models/model.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -42,6 +42,15 @@ def index():
     # TODO: Below is an example - modify to extract data for your own visuals
     genre_counts = df.groupby('genre').count()['message']
     genre_names = list(genre_counts.index)
+    
+    category_related_direct = df[df['genre'] == 'direct'].iloc[:, 4:].sum()
+    category_names_direct = df[df['genre'] == 'direct'].iloc[:, 4:].sum().index
+    
+    category_related_social = df[df['genre'] == 'social'].iloc[:, 4:].sum()
+    category_names_social = df[df['genre'] == 'social'].iloc[:, 4:].sum().index
+    
+    category_related_news = df[df['genre'] == 'news'].iloc[:, 4:].sum()
+    category_names_news = df[df['genre'] == 'news'].iloc[:, 4:].sum().index
     
     # create visuals
     # TODO: Below is an example - modify to create your own visuals
@@ -61,6 +70,63 @@ def index():
                 },
                 'xaxis': {
                     'title': "Genre"
+                }
+            }
+        },
+        
+        {
+            'data': [
+                Bar(
+                    x = category_names_direct,
+                    y = category_related_direct
+                )
+            ],
+
+            'layout': {
+                'title': 'number of direct for each category',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "categories"
+                }
+            }
+        },
+        
+        {
+            'data': [
+                Bar(
+                    x = category_names_social,
+                    y = category_related_social
+                )
+            ],
+
+            'layout': {
+                'title': 'number of social for each category',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "categories"
+                }
+            }
+        },
+        
+        {
+            'data': [
+                Bar(
+                    x = category_names_news,
+                    y = category_related_news
+                )
+            ],
+
+            'layout': {
+                'title': 'number of news for each category',
+                'yaxis': {
+                    'title': "Count"
+                },
+                'xaxis': {
+                    'title': "categories"
                 }
             }
         }
