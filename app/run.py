@@ -15,6 +15,18 @@ from sqlalchemy import create_engine
 app = Flask(__name__)
 
 def tokenize(text):
+    """
+    Summary line.
+    
+    Tokenize the words input on the web app
+    
+    Parameters:
+    text: words from input of web app
+    
+    Returns:
+    list: a list of tokenized words
+    
+    """
     tokens = word_tokenize(text)
     lemmatizer = WordNetLemmatizer()
 
@@ -37,6 +49,18 @@ model = joblib.load("../models/model.pkl")
 @app.route('/')
 @app.route('/index')
 def index():
+    """
+    Summary line.
+    
+    Here defines how the index.html works
+    
+    Parameters:
+    N/A
+    
+    Returns:
+    All visuals defined in this function
+    
+    """
     
     # extract data needed for visuals - 1st visual
     genre_counts = df.groupby('genre').count()['message']
@@ -144,6 +168,18 @@ def index():
 # web page that handles user query and displays model results
 @app.route('/go')
 def go():
+    """
+    Summary line.
+    
+    Here defines how the go.html works
+    
+    Parameters:
+    N/A
+    
+    Returns:
+    The go.html
+    
+    """
     # save user input in query
     query = request.args.get('query', '') 
 

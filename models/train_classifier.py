@@ -24,7 +24,20 @@ from sklearn.metrics import classification_report
 
 
 def load_data(database_filepath):
+    """
+    Summary line.
     
+    This function is to load the data from database, give further feature and target variables
+    
+    Parameters:
+    database_filepath (str): the path of the database
+    
+    Returns:
+    X (array): feature of the data
+    y (array): target variable values of the data
+    category_names (list): target variable names of the data
+    
+    """
     # load data from database
     con = sqlite3.connect(database_filepath)
     df = pd.read_sql("SELECT * FROM DisasterResponseRawData", con)
@@ -40,7 +53,17 @@ def load_data(database_filepath):
 
 
 def tokenize(text):
+    """
+    Summary line.
     
+    This function is to tokenize the messages from the training data
+    
+    Parameters:
+    text (str): messages column of dataa
+    
+    Returns:
+    stemmed (list): tokenized message of data
+    """
     # tokenize each message as single words
     tokenized = word_tokenize(text)
     
@@ -56,7 +79,17 @@ def tokenize(text):
     return stemmed
 
 def build_model():
+    """
+    Summary line.
     
+    This function is to build the training model
+    
+    Parameters:
+    N/A
+    
+    Returns:
+    Model to be trained
+    """
     # build pipeline using bag of words, tfidf, and KNeigbours algorithm for the model 
     pipeline = Pipeline([
         ('vect', CountVectorizer(tokenizer = tokenize, 
@@ -79,7 +112,20 @@ def build_model():
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+    """
+    Summary line.
     
+    This function is to display the results report of trained data with model
+    
+    Parameters:
+    model (Sklearn model): Model to be trained
+    X_test (array): features of training set
+    Y_test (array): target variables of traning set
+    category_names (list): traget variable names
+    
+    Returns:
+    N/A
+    """
     # predict multlabels (categories) for each message
     Y_pred = model.predict(X_test)
         
@@ -96,7 +142,18 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+    """
+    Summary line.
     
+    This function is to save the model as .pkl file
+    
+    Parameters:
+    model (Sklearn model): Model trained
+    model_filepath (str): path to save the model
+    
+    Returns:
+    N/A
+    """
     # save model to model_filepath
     pickle.dump(model, open(model_filepath, 'wb'))
 

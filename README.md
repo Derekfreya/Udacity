@@ -1,5 +1,24 @@
 # Disaster Response Pipeline Project
 
+This is a web app used to classify any human messages into different categories below, feel free to visit https://github.com/Derekfreya/Udacity for further information.
+
+This repository contains the following files:
+
+1. app
+   - web templates -> including index.html and go.html
+   - run.py -> python script to run the app
+
+2. data
+   - DisasterResponseDatabase.db -> cleaned data to store
+   - disaster_categories.csv -> raw data
+   - disaster_messages.csv -> raw data
+   - process_data.py -> python script for data processing
+   
+3. models
+   - model.pkl -> trained machine learning model file to be used for web app
+   - train_classifier.py -> python script for model training
+
+
 ### Instructions:
 1. Run the following commands in the project's root directory to set up your database and model.
 
@@ -12,3 +31,5 @@
     `python run.py`
 
 3. Go to http://0.0.0.0:3001/
+
+

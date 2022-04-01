@@ -6,12 +6,25 @@ from sqlalchemy import create_engine
 
 
 def load_data(messages_filepath, categories_filepath):
+    """
+    Summary line.
+    
+    This function is to load the raw csv data
+    
+    Parameters:
+    messages_filepath (str): path of disaster_message.csv
+    categories_filepath (str): path of disaster_categories.csv
+    
+    Returns:
+    DataFrame: merged disaster_message.csv and disaster_categories.csv
+    
+    """
     
     # load messages dataset
-    messages = pd.read_csv(r'./disaster_messages.csv')
+    messages = pd.read_csv(messages_filepath)
     
     # load categories dataset
-    categories = pd.read_csv(r'./disaster_categories.csv')
+    categories = pd.read_csv(categories_filepath)
     
     # merge datasets
     df = messages.merge(categories, how = 'outer', on = ['id'])
@@ -20,6 +33,18 @@ def load_data(messages_filepath, categories_filepath):
     
 
 def clean_data(df):
+    """
+    Summary line.
+    
+    This function is to clean the data
+    
+    Parameters:
+    df (DataFrame): merged disaster_message.csv and disaster_categories.csv
+    
+    Returns:
+    Dataframe: cleaned data
+    
+    """
     
     # create a dataframe of the 36 individual category columns
     categories = df['categories'].str.split(';', expand = True)
@@ -50,11 +75,23 @@ def clean_data(df):
     
     return df
 
-def save_data(df, database_filename):
+def save_data(df, database_filepath):
+    """
+    Summary line.
     
+    This function is to save the data to database
+    
+    Parameters:
+    df (DataFrame): cleaned data
+    database_filename (str): 
+    
+    Returns:
+    N/A
+    
+    """
     # save data to SQL
-    engine = create_engine('sqlite:///DisasterResponseDatabase.db')
-    df.to_sql('DisasterResponseRawData', engine, index=False)  
+    engine = create_engine('sqlite:///{}'.format(database_filepath))
+    df.to_sql('DisasterResponseRawData', engine, if_exists='replace', index=False)  
 
 
 def main():
